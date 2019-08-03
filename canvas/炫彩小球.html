@@ -1,78 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>炫彩小球</title>
-    <style>
-        canvas{
-            margin: 0 auto;
-            border: 1px solid #ccc;
-            display: block;
-            margin: 0 auto;
-        }
-    </style>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>炫彩小球</title>
+	<style>
+		canvas {
+			margin: 0 auto;
+			border: 1px solid #ccc;
+			display: block;
+		}
+	</style>
 </head>
+
 <body>
-    <canvas id="canvas" width="800" height="500"></canvas>
+	<canvas id="canvas" width="800" height="500"></canvas>
 </body>
+
 </html>
-<script src="lib/underscore-min.js"></script>
 <script>
-    var canvas = document.getElementById('canvas'); 
-    
-    //获取上下文
-    var ctx = canvas.getContext('2d');
+	var canvas = document.getElementById('canvas');
 
-    //小球--面向对象
-    function Ball(x,y,r){
-        var color = [' #FF0000 ','#FF7F00','#FFFF00 ','#00FF00 ',' #00FFFF ','#0000FF','#8B00FF'];
-        this.x = x;
-        this.y = y;
-        this.r = Math.random()*r+10 || 30;
-        var colorIdx = parseInt(Math.random()*(color.length)-1);
-        //console.log(colorIdx);
-        this.color = color[colorIdx];
+	//获取上下文
+	var ctx = canvas.getContext('2d');
 
-        this.dx = Math.random()*10-5; //-10~10
-        this.dy = Math.random()*10-5;
-        this.dr = Math.random() + 0.2; //0.2~1.2
+	let ballArr = new Array()
 
-        ballArray.push(this);
-    }
-    Ball.prototype = {
-        render : function(){
-            ctx.beginPath();
-            ctx.arc(this.x,this.y,this.r,0,Math.PI*2,true);
-            ctx.fillStyle = this.color;
-            ctx.fill();
-            ctx.closePath();
-        },
-        updata : function(){
-            this.x = this.x + this.dx;
-            this.y = this.y + this.dy;
-            if(this.r - this.dr < 0){
-                this.r = 0;
-            }else{
-                this.r = this.r - this.dr;
-            }
+	// 小球对象
+	class Ball {
+		constructor (x, y, r = 30) {
+			const colors = [' #FF0000 ','#FF7F00','#FFFF00 ','#00FF00 ',' #00FFFF ','#0000FF','#8B00FF']
+			this.x = x
+			this.y = y
 
-        }
-    }
+			this.dx = Math.random() * 10 - 5 // -5 ~ 5
+			this.dy = Math.random() * 10 - 5
+			this.dr = Math.random() + 0.2 // 0.2 ~ 1.2
 
-   //使用ctx进行绘制。
-   var ballArray = new Array();
+			this.r = Math.random() * r + 10
 
-   setInterval(function(){
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-        for(var i = 0; i< ballArray.length;i++){
-            ballArray[i].updata();
-            ballArray[i].render();
-        }
-   },20)
+			const colorIdx = parseInt(Math.random() * [colors.length - 1])
+			this.color = colors[colorIdx]
 
-   canvas.addEventListener('mousemove',function(e){
-       new Ball(e.offsetX,e.offsetY);
-   });
+			ballArr.push(this)
+		}
+
+		render () {
+			ctx.beginPath()
+			ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, true)
+			ctx.fillStyle = this.color
+			ctx.fill()
+			ctx.closePath()
+		}
+
+		update () {
+			this.x = this.x + this.dx
+			this.y = this.y + this.dy
+
+			if (this.r - this.dr < 0) {
+				this.r = 0
+				// 删除此小球
+				ballArr.splice(ballArr.indexOf(this), 1)
+			} else {
+				this.r = this.r - this.dr
+			}
+		}
+	}
+
+	// 定时刷新，更新所有小球
+	setInterval(() => {
+		// 清除canvas
+		ctx.clearRect(0, 0, canvas.width, canvas.height)
+		ballArr.forEach(ball => {
+			ball.update()
+			ball.render()
+		})
+	}, 20)
+
+	canvas.addEventListener('mousemove', e => {
+		new Ball(e.offsetX,e.offsetY)
+	})
 </script>

@@ -39,13 +39,15 @@
 			context.fillStyle = data[i].color;
 			var startAngle = tempAngle * Math.PI /180;
 			var endAngle = (data[i].value * 360 + tempAngle) * Math.PI /180;
+
 			var titleAngle = (data[i].value * 360 /2 + tempAngle) * Math.PI /180;
 			var titleX = (radius + 60) * Math.cos(titleAngle);
 			var titleY = (radius + 60) * Math.sin(titleAngle);
+			
 			context.strokeText(data[i].title,300+titleX,300+titleY);
 			context.arc(x0,y0,radius,startAngle,endAngle);
 			context.fill();
-
+			
 			tempAngle += data[i].value * 360;  
 		}
 	</script>
