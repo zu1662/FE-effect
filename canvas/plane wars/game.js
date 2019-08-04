@@ -1,7 +1,12 @@
 import StaticResourcesUtil from './objects/staticResourcesUtil.js'
+import ScoreUtil from './objects/scoreUtil.js'
 import FPSUtil from './objects/FPSUtil.js'
 import GameInterface from './objects/gameInterface.js'
 import Background from './objects/background.js'
+import Plane from './objects/plane.js'
+import BulletManager from './objects/bullet.js'
+import SupplyManager from './objects/supply.js'
+import EnemyManager from './objects/enemy.js'
 
 class Game {
   constructor({ canvasId, fps = 60 , clientWidth = 394, clientHeight = 700}) {
@@ -46,6 +51,26 @@ class Game {
       if (alreadyLoadNum == allImagesNum) {
           this.images = imagesObj
 
+           // 初始化飞机对象
+           this.plane = new Plane({
+            gameObj: this
+          })
+
+          // 子弹管理类初始化
+          this.bulletManager = new BulletManager({
+            gameObj: this
+          })
+
+          // 敌机管理类初始化
+          this.enemyManager = new EnemyManager({
+            gameObj: this
+          })
+         
+          // 补给初始化
+          this.supplyManager = new SupplyManager({
+            gameObj: this
+          })
+
           // 初始化背景图片对象
           this.background = new Background({
             gameObj: this
@@ -56,6 +81,11 @@ class Game {
             gameObj: this
           })
 
+          // 初始化分数管理类
+          this.scoreUtil = new ScoreUtil({
+            gameObj: this
+          })
+          
           // 当图片加载完成后，显示开始游戏界面
           this.interface.printBegin()
           this.interface.beginClick(() => {
@@ -96,7 +126,12 @@ class Game {
 
   // 游戏结束
   gameOver () {
-
+    // 背景音乐暂停
+    this.background.pauseAudio()
+    // 清除定时器
+    this.timer = clearInterval(this.timer)
+    // 调用结束接口
+    this.interface.printOver()
   }
 
   // 游戏暂停
@@ -123,6 +158,72 @@ class Game {
     //打印帧编号
     this.ctx.fillText("FNO / " + this.fpsUtil.currentFrame, 10, 40);
 
+    // 飞机是否死亡
+    this.planeIsDie()
+    // 更新飞机状态
+    this.plane.fire()
+    this.plane.render()
+
+    // 更新子弹状态
+    this.bulletManager.updateBullet()
+
+    // 添加敌机
+    this.enemyManager.addEnemy()
+    // 更新敌机是否死亡
+    this.enemyIsDie()
+    // 更新敌机状态
+    this.enemyManager.updateEnemy()
+
+    // 更新补给状态
+    this.supplyManager.addSupply()
+    this.supplyManager.updateSupply()
+
+    // 更新分数
+    this.scoreUtil.render()
+  }
+
+  // 敌机是否被子弹消灭
+  enemyIsDie () {
+    this.enemyManager.enemyArr.forEach((enemy, enemyIdx) => {
+      this.bulletManager.bulletArr.forEach((bullet, bulletIdx) => {
+        if (
+          bullet.x > enemy.x - bullet.w &&
+          bullet.x < enemy.x + enemy.w + bullet.w &&
+          bullet.y > enemy.y - bullet.h &&
+          bullet.y < enemy.y + enemy.h + bullet.h
+        ) {
+          // 确保敌机为活状态
+          if (enemy.liveState) {
+            this.bulletManager.clearBullet(bullet)
+
+            // 敌机血量减少
+            enemy.hp = enemy.hp - bullet.power
+            // 当血量 <= 0 时，敌机死亡。死亡动画
+            if (enemy.hp <= 0) {
+              enemy.liveState = false
+              this.scoreUtil.addScore(enemy.score)
+            }
+          }
+        }
+      })
+    })
+  }
+
+  // 飞机是否死亡
+  planeIsDie () {
+    this.enemyManager.enemyArr.forEach((enemy, enemyIdx) => {
+      if (
+        enemy.x > this.plane.x - enemy.w &&
+        enemy.x < this.plane.x + this.plane.w + enemy.w &&
+        enemy.y > this.plane.y - enemy.h &&
+        enemy.y < this.plane.y + this.plane.h + enemy.h
+      ) {
+        // 确保是碰撞的存活飞机
+        if (enemy.liveState) {
+          this.plane.liveState = false
+        }
+      }
+    })
   }
 }
 

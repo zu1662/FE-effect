@@ -2,7 +2,7 @@
  * @Author: zu1662
  * @LastEditor: zu1662
  * @Date: 2019-08-03 20:39:42
- * @LastEditTime: 2019-08-03 21:12:54
+ * @LastEditTime: 2019-08-04 21:14:07
  * @Description:  游戏界面操作接口，包括：开始，暂停，结束等的显示渲染
  */
 class GameInterface {
@@ -53,6 +53,22 @@ class GameInterface {
         callback()
       }
     }
+  }
+
+  printOver () {
+    this.gameObj.ctx.clearRect(0, 0, this.gameObj.canvas.width, this.gameObj.canvas.height)
+     // 最高分数
+     this.gameObj.scoreUtil.setMaxScore()
+     let maxScore = this.gameObj.scoreUtil.getMaxScore()
+     this.gameObj.ctx.drawImage(this.gameObj.images.gameover, 0, 0, this.gameObj.canvas.width, this.gameObj.canvas.height)
+     this.gameObj.ctx.font = "60px 黑体"
+     this.gameObj.ctx.fillText(maxScore, this.gameObj.canvas.width / 2 - 100, this.gameObj.canvas.height / 2 - 30)
+     this.gameObj.ctx.font = "60px 黑体"
+     this.gameObj.ctx.fillText(this.gameObj.scoreUtil.score, this.gameObj.canvas.width / 2 - 100, this.gameObj.canvas.height / 2 + 200)
+ 
+     window.addEventListener('click', e => {
+       location.reload()
+     })
   }
 }
 
