@@ -2,7 +2,7 @@
  * @Author: zu1662
  * @LastEditor: zu1662
  * @Date: 2019-08-03 20:39:42
- * @LastEditTime: 2019-08-04 21:14:07
+ * @LastEditTime: 2019-08-04 22:27:21
  * @Description:  游戏界面操作接口，包括：开始，暂停，结束等的显示渲染
  */
 class GameInterface {
@@ -11,6 +11,7 @@ class GameInterface {
     this.gameObj = gameObj
     // canvas的offsetLeft
     this.canvasLeft = this.gameObj.canvas.offsetLeft
+    this.canvasTop = this.gameObj.canvas.offsetTop
     // '飞机大战' 图片绘制参数
     this.beiginName = {
       image: this.gameObj.images.name,
@@ -45,11 +46,11 @@ class GameInterface {
   beginClick (callback) {
     this.gameObj.canvas.onmousedown = (e) => {
       let nowX = e.x - this.canvasLeft
-      let nowY = e.y
+      let nowY = e.y - this.canvasTop
       // 判断是否点击到 '开始游戏'
       if (
         nowX > this.beginText.x && nowX < this.beginText.x + this.beginText.w && 
-        nowY > this.beginText.y && nowY < this.beginText.y + this.beginText.h) {
+        nowY > this.beginText.y - this.beginText.h / 2 && nowY < this.beginText.y + this.beginText.h) {
         callback()
       }
     }
@@ -61,9 +62,9 @@ class GameInterface {
      this.gameObj.scoreUtil.setMaxScore()
      let maxScore = this.gameObj.scoreUtil.getMaxScore()
      this.gameObj.ctx.drawImage(this.gameObj.images.gameover, 0, 0, this.gameObj.canvas.width, this.gameObj.canvas.height)
+     this.gameObj.ctx.textAlign = 'left'
      this.gameObj.ctx.font = "60px 黑体"
      this.gameObj.ctx.fillText(maxScore, this.gameObj.canvas.width / 2 - 100, this.gameObj.canvas.height / 2 - 30)
-     this.gameObj.ctx.font = "60px 黑体"
      this.gameObj.ctx.fillText(this.gameObj.scoreUtil.score, this.gameObj.canvas.width / 2 - 100, this.gameObj.canvas.height / 2 + 200)
  
      window.addEventListener('click', e => {
