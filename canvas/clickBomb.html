@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>点击爆炸效果</title>
+</head>
+<body>
+    <div id="div" style="width: 100px;height: 80px;background-color: #f5f5f5;"></div>
+    <div id="div1" style="width: 200px;height: 100px;background-color: #f5f5f5;margin-top: 20px;"></div>
+    <div id="div2" style="width: 300px;height: 200px;background-color: #f5f5f5;margin-top: 20px;"></div>
+</body>
+</html>
+<script>
+class ClickBomb {
+    constructor (dom, event, callback) {
+        // 传入的dom
+        this.dom = dom
+        this.event = event
+        this.callback = callback
+        // dom的宽高
+        const domW = this.dom.clientWidth
+        const domH = this.dom.clientHeight
+        this.domLeft = this.dom.offsetLeft
+        this.domTop = this.dom.offsetTop
+        // 创建canvas并把canvas设置在dom内
+        this.canvas = document.createElement('canvas')
+        this.canvas.width = domW
+        this.canvas.height = domH
+        this.dom.appendChild(this.canvas)
+
+        this.ctx = this.canvas.getContext('2d')
+
+        this.r = 0
+        this.maxR = (domW > domH ? domW : domH) * 1.5
+        this.dr = 3
+
+        this.timer = null
+
+        this.render(this.event)
+    }
+
+    render (e) {
+        if(this.timer) return
+        this.timer = setInterval(()=>{
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+            this.ctx.beginPath()
+            this.ctx.fillStyle = 'rgba(6,155,229,0.4)'
+            this.ctx.arc(e.x - this.domLeft, e.y - this.domTop, this.r, 0, 2 * Math.PI)
+            this.ctx.fill()
+            this.r = this.r + this.dr
+            if(this.r > this.maxR) {
+                this.timer = clearInterval(this.timer)
+                this.dom.removeChild(this.canvas)
+                this.callback()
+            }
+        }, 1000 / this.maxR )
+    }
+}
+let div = document.getElementById('div')
+let div1 = document.getElementById('div1')
+let div2 = document.getElementById('div2')
+div.onmousedown = (e) => {
+    if(this.bomb) return
+    this.bomb = new ClickBomb(div, e, () => {
+        this.bomb = null
+    })
+}
+div1.onmousedown = (e) => {
+    if(this.bomb) return
+    this.bomb = new ClickBomb(div1, e, () => {
+        this.bomb = null
+    })
+}
+div2.onmousedown = (e) => {
+    if(this.bomb) return
+    this.bomb = new ClickBomb(div2, e, () => {
+        this.bomb = null
+    })
+}
+</script>
