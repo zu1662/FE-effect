@@ -1,0 +1,144 @@
+.verify-card {
+  color: #666;
+  width: fit-content;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.125);
+  border: 1px solid rgba(0,0,0,.125);
+  background-color: #fff;
+}
+.verify-card .card-header {
+  padding: 10px;
+  font-size: 15px;
+  border-bottom: 1px solid #ccc;
+  
+}
+
+.verify-card .card-body {
+  position: relative;
+  padding: 10px;
+}
+.verify-card .card-body .captcha-box {
+  position: relative;
+  overflow: hidden;
+}
+.verify-card .card-body .captcha-box .puzzle-box {
+  position: relative;
+}
+.verify-card .card-body .captcha-box .puzzle-box #puzzleBox {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 22;
+}
+
+.verify-card .card-body .captcha-box .puzzle-lost-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 111;
+}
+.verify-card .card-body .captcha-box .puzzle-lost-box #puzzleShadow {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  z-index: 22;
+  transition: left 0.5s ease 0s;
+}
+.verify-card .card-body .captcha-box .puzzle-lost-box #puzzleLost {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  z-index: 33;
+  transition: left 0.5s ease 0s;
+}
+
+.verify-card .card-body .captcha-box .ver-tips {
+  position: absolute;
+  left: 0;
+  bottom: -22px;
+  background: rgba(255,255,255,.9);
+  height: 22px;
+  line-height: 22px;
+  font-size: 12px;
+  width: 100%;
+  margin: 0;
+  text-align: left;
+  padding: 0 8px;
+  transition: all .4s;
+  user-select: none;
+}
+.verify-card .card-body .captcha-box .ver-tips.slider-tips {
+  bottom: 0;
+}
+.verify-card .card-body .captcha-box .ver-tips span {
+  display: inline-block;
+  vertical-align: top;
+  line-height: 22px;
+}
+
+
+.verify-card .card-body .re-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  height: 28px;
+  z-index: 100;
+}
+.verify-card .card-body .re-btn a::before {
+  content: '↻';
+  color: #fff;
+  display: inline-block;
+  padding: 5px 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+
+.verify-card .card-body .slider-box {
+  position: relative;
+  margin: auto;
+}
+.verify-card .card-body .slider-box .slider-main {
+  margin-top: 5px;
+  border: 1px solid #eee;
+  background: #f7f9fa;
+}
+.verify-card .card-body .slider-box .slider-main p {
+  font-size: 12px;
+  color: #666;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  user-select: none;
+}
+.verify-card .card-body .slider-box .slider-btn {
+  position: absolute;
+  left: 0;
+  top: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  z-index: 12;
+  cursor: pointer;
+  background: #d1e9fe;
+  border-radius: 2px;
+  transition: all  0.5s ease 0s;
+}
+.verify-card .card-body .slider-box .slider-btn:hover {
+  background: #1991fa;
+  color: #fff;
+}
+.verify-card .card-body .slider-box .slider-btn::before {
+  content: '→';
+  font-size: 20px;
+  font-weight: bolder;
+}
+.verify-card .card-body .slider-box .slider-btn.fali {
+  background: #f57a7a;
+  border: 0 solid #f57a7a;
+}
+.verify-card .card-body .slider-box .slider-btn.fali::before {
+  content: '×';
+}

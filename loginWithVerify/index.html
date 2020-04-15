@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Login</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    html,
+    body {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      
+    }
+
+    body {
+      background: url("./img/bg.png") no-repeat center center;
+      background-size: cover;
+    }
+
+    .login-panel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 400px;
+      background: rgba(124, 134, 158, .7);
+    }
+
+    #loginForm {
+      width: 300px;
+      color: #fff;
+    }
+
+    #loginForm .logo {
+      text-align: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    #loginForm .logo img {
+      width: 230px;
+      height: 55px;
+    }
+
+    #loginForm .form-item {
+      margin: 15px 0;
+    }
+
+    #loginForm .form-item.info.psw-box {
+      margin-top: 25px;
+    }
+    #loginForm .form-item.info label {
+      font-size: 12px;
+      line-height: 15px;
+    }
+
+    #loginForm .form-item.info .input-box {
+      margin-top: 10px;
+      height: 25px;
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+      background-color: rgba(255, 255, 255, .17);
+    }
+
+    #loginForm .form-item.info .input-box input {
+      height: 100%;
+      line-height: 25px;
+      background-color: transparent;
+      color: #fff;
+      font-size: 16px;
+      flex: 1;
+      outline: none;
+      border: none;
+    }
+
+    #loginForm .form-item.info .input-box .input-icon {
+      margin-right: 10px;
+      display: block;
+      width: 16px;
+      height: 20px;
+      background-size: cover;
+    }
+
+
+
+    #loginForm .form-item.info.code-box .input-box {
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+    }
+    #imgVer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: none;
+      opacity: 0;
+      background-color: rgba(0,0,0,.3);
+      align-items: center;
+      justify-content: center;
+      transition: all ease-in .5s;
+    }
+    #imgVer.show {
+      display: flex;
+      opacity: 1;
+    }
+  
+
+
+
+    #loginForm .form-item.info .input-box .input-icon.username {
+      background-image: url("./img/user.png");
+    }
+
+    #loginForm .form-item.info .input-box .input-icon.password {
+      background-image: url("./img/lock.png");
+    }
+    #loginForm .form-item.info .input-box .input-icon.fresh {
+      background-image: url("./img/fresh.png");
+    }
+
+    #loginForm .form-item.option{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+    }
+    #loginForm .form-item.option .remember {
+      display: flex;
+      align-items: center;
+      height: 12px;
+      line-height: 13px;
+    }
+    #loginForm .form-item.option a {
+      color: #fff;
+    }
+
+    #loginForm .form-item.feeling {
+      margin-top: 25px;
+    }
+    #loginForm .form-item.feeling h2 {
+      font-size: 14px;
+      line-height:18px;
+      font-weight: normal;
+    }
+    #loginForm .form-item.feeling .emoji {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 50px;
+    }
+    #loginForm .form-item.feeling .icon-box {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    #loginForm .form-item.feeling .emoji .icon {
+      display: block;
+      width: 36px;
+      height: 36px;
+      background-repeat: no-repeat;
+      background-size: contain;
+      opacity: 0.5;
+      transition: opacity ease-in .3s;
+    }
+    #loginForm .form-item.feeling .emoji .icon-box:hover .icon,
+    #loginForm .form-item.feeling .emoji .icon-box.active .icon {
+      opacity: 1;
+      width: 50px;
+      height: 50px;
+    }
+    #loginForm .form-item.feeling .emoji .icon-box.excited .icon {
+      background-image: url("./img/feeling/excited-hover.png");
+    }
+    #loginForm .form-item.feeling .emoji .icon-box.happy .icon{
+      background-image: url("./img/feeling/happy-hover.png");
+    }
+    #loginForm .form-item.feeling .emoji .icon-box.peace .icon{
+      background-image: url("./img/feeling/peace-hover.png");
+    }
+    #loginForm .form-item.feeling .emoji .icon-box.sad .icon{
+      background-image: url("./img/feeling/sad-hover.png");
+    }
+    #loginForm .form-item.feeling .emoji .icon-box.mad .icon{
+      background-image: url("./img/feeling/mad-hover.png");
+    }
+
+    #loginForm .form-item .submit-btn {
+      width: 100%;
+      height: 45px;
+      text-align: center;
+      line-height: 45px;
+      font-size: 16px;
+      background-color: #fff;
+      color: #000;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    #loginForm .form-item .submit-btn:hover {
+      opacity: 0.9;
+    }
+    #loginForm .form-item .submit-btn:active{
+      opacity: 0.7;
+    }
+    #loginForm .form-item .or {
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+    #loginForm .form-item.ad {
+      width: 100%;
+      text-align: center;
+    }
+    #loginForm .form-item.ad .ad-btn{
+      display: inline-block;
+      font-size: 14px;
+      width: 216px;
+      height: 34px;
+      line-height: 34px;
+      background-color: #1857A6;
+      color: #fff;
+      text-align: center;
+      cursor: pointer;
+    }
+    #loginForm .form-item.ad .ad-btn:hover{
+      opacity: 0.9;
+    }
+    #loginForm .form-item.ad .ad-btn:active{
+      opacity: 0.7;
+    }
+
+    .feelings {
+      display: none;
+      position: absolute;
+      left: 120px;
+      top: 120px;
+      width: 300px;
+    }
+  </style>
+  <link rel="stylesheet" href="./verifycode/verify-new.css">
+  <script src="https://cdn.bootcss.com/jquery/3.5.0/jquery.js"></script>
+  <script src="./verifycode/verify-new.js"></script>
+</head>
+
+<body>
+  <div class="feelings">
+    <img src="./img/feeling/excited-info.png">
+  </div>
+  <div class="login-panel">
+    <form name="loginForm" id="loginForm" action="" method="post">
+      <div class="form-item info">
+        <label for="">Account</label>
+        <div class="input-box">
+          <i class="input-icon username"></i>
+          <input type="text" name="username">
+        </div>
+      </div>
+      <div class="form-item info psw-box">
+        <label for="">Password</label>
+        <div class="input-box">
+          <i class="input-icon password"></i>
+          <input type="password" name="password">
+        </div>
+      </div>
+      <div class="form-item info code-box">
+        <label for="">Verification Code</label>
+        <div class="input-box" id="verifyBtn">
+          <span>点此进行验证</span>
+        </div>
+      </div>
+      <div class="form-item option">
+        <label class="remember">
+          <input type="checkbox" name="remember">
+          <span>Remember Password</span>
+        </label>
+        <a href="#">Forgot your password?</a>
+      </div>
+      <div class="form-item feeling">
+        <h2>How's your feeling today?</h2>
+        <div class="emoji">
+          <div class="icon-box excited">
+            <i class="icon"></i>
+          </div>
+          <div class="icon-box happy">
+            <i class="icon"></i>
+          </div>
+          <div class="icon-box peace">
+            <i class="icon"></i>
+          </div>
+          <div class="icon-box sad">
+            <i class="icon"></i>
+          </div>
+          <div class="icon-box mad">
+            <i class="icon"></i>
+          </div>
+        </div>
+      </div>
+      <div class="form-item">
+        <button class="submit-btn" type="submit">Sign in</button>
+      </div>
+    </form>
+  </div>
+  <div id="imgVer"></div>
+</body>
+</html>
+<script>
+$(function(){
+  let verify = new VerifyImg({
+    el: '$("#imgVer")', //绑定的节点
+    width: '280', //设置长
+    height: '150', //设置宽
+    imgs: [ //图片库 
+        './verifycode/1.jpg',
+        './verifycode/2.jpg',
+        './verifycode/3.jpg',
+        './verifycode/4.jpg'
+    ],
+    success: function() {
+      alert('执行登录函数');
+      $('#imgVer').removeClass('show')
+    }
+  })
+  // 表情点击
+  $(".emoji .icon-box").on("click", function(e){
+    $(this).addClass('active').siblings().removeClass('active')
+    var nowIndex = $(this).index()
+    $(".feelings").show()
+
+    switch (nowIndex) {
+      case 0: 
+        $(".feelings img").attr("src", "./img/feeling/excited-info.png")
+        break
+      case 1: 
+        $(".feelings img").attr("src", "./img/feeling/happy-info.png")
+        break
+      case 2: 
+        $(".feelings img").attr("src", "./img/feeling/peace-info.png")
+        break
+      case 3: 
+        $(".feelings img").attr("src", "./img/feeling/sad-info.png")
+        break
+      case 4: 
+        $(".feelings img").attr("src", "./img/feeling/mad-info.png")
+        break
+    }
+  })
+  
+  $('#verifyBtn').on('click', function(){
+    $('#imgVer').addClass('show')
+  })
+  $('#imgVer').on('click', function(){
+    $('#imgVer').removeClass('show')
+  })
+});
+</script>
