@@ -1,0 +1,318 @@
+.item-model {
+  margin: 50px auto;
+  color: #2d5891;
+  text-align: center;
+}
+.item-model span {
+  font-size: 12px;
+}
+.item-model h1 {
+  font-size: 30px;
+  margin: 20px 0 30px 0;
+}
+.item-model .line {
+  margin: 0 auto;
+  width: 100px;
+  height: 2px;
+  background-color: #2d5891;
+}
+
+#banner {
+  width: 100%;
+}
+
+/* banner设置 */
+#banner .swiper-pagination {
+  margin-bottom: 20px;
+}
+#banner .swiper-pagination .swiper-pagination-bullet {
+  position: relative;
+  width: 80px;
+  height: 20px;
+  margin: 0;
+  padding: 10px 10px;
+  display: inline-block;
+  border-radius: 0;
+  border-bottom: 1px solid #fff;
+  background: transparent;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  opacity: 1;
+}
+#banner .swiper-pagination .swiper-pagination-bullet::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background-color: #fff;
+  position: absolute;
+  bottom: -15px;
+  left: 40%;
+  transition: width ease-in .3s;
+}
+#banner .swiper-pagination .swiper-pagination-bullet-active::after {
+  width: 20%;
+}
+
+#banner .swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#banner .swiper-slide .banner-bg {
+  position: absolute;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+#banner .swiper-slide-active .banner-bg {
+  animation: scaleBigToSmall 4s;
+}
+@keyframes scaleBigToSmall {
+  0% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+#banner .swiper-slide .banner-text {
+  z-index: 500;
+  font-size: 30px;
+  color: #fff;
+  transform: translateY(200px);
+  opacity: 0;
+  transition: all .5s;
+}
+#banner .swiper-slide-active .banner-text {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+
+
+/* competence */
+#competence {
+  display: flex;
+  align-items: center;
+}
+#competence .com-item {
+  display: inline-block;
+  padding: 20px 30px;
+  width: calc(25% - 2px);
+  border: 1px solid #f7f7f7;
+  cursor: pointer;
+  transition: all ease-in .2s;
+}
+#competence .com-item:hover {
+  border-color: #2d5891;
+  color: #2d5891;
+  background-color: #fff;
+}
+#competence .com-item .com-logo {
+  margin-top: 40px;
+  height: 100px;
+  text-align: center;
+}
+#competence .com-item .com-logo .icon.comicon,
+#competence .com-item .com-logo .icon.comiconhover {
+  height: 96px;
+  width: 95px;
+  vertical-align: top;
+}
+#competence .com-item .com-logo .icon.comiconhover {
+  display: none;
+}
+#competence .com-item:hover .com-logo .icon.comicon {
+  display: none;
+}
+#competence .com-item:hover .com-logo .icon.comiconhover {
+  display: inline-block;
+}
+#competence .com-item .com-content h3 {
+  font-size: 18px;
+  text-align: center;
+  line-height: 60px;
+}
+#competence .com-item .com-content p {
+  line-height: 25px;
+}
+
+
+/* solution */
+#solution .swiper-solution {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+}
+#solution .swiper-slide .solution-bg {
+  position: absolute;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+#solution .swiper-slide .solution-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 40px;
+  top: 5%;
+  width: 30%;
+  height: 300px;
+  border: 60px solid #fff;
+  background: #ff0000 no-repeat right bottom;
+  background-size: cover;
+  background-blend-mode: hard-light;
+}
+#solution .swiper-slide .solution-info .inner-box {
+  margin: 30px;
+  padding: 30px;
+  background-color: #fff;
+}
+#solution .swiper-slide .solution-info .inner-box h1 {
+  margin-bottom: 15px;
+}
+#solution .swiper-slide .solution-info .inner-box p {
+  line-height: 25px;
+}
+
+
+
+
+#solution .swiper-solution .swiper-pagination {
+  width: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  right: calc(30% + 120px);
+  top: 40%;
+  bottom: auto;
+  left: auto;
+}
+
+#solution .swiper-solution .swiper-pagination .sp-cur,
+#solution .swiper-solution .swiper-pagination .sp-total {
+  font-size: 18px;
+  font-family: "Impact","AkzidenzGrotesk-ExtraBoldCondAlt" !important;
+}
+#solution .swiper-solution .swiper-pagination .sp-cur {
+  color: #2d5891;
+}
+#solution .swiper-solution .swiper-pagination .sp-line {
+  height: 40px;
+  width: 2px;
+  background-color: #333;
+  margin: 10px 0;
+}
+
+#solution .swiper-solution .swiper-btn {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 15%;
+  top: 78%;
+  z-index: 100;
+  height: 50px;
+}
+#solution .swiper-solution .swiper-btn .swiper-next,
+#solution .swiper-solution .swiper-btn .swiper-prev {
+  position: relative;
+  margin: 0 3%;
+  width: 100px;
+  height: 40px;
+  transition: all 0.35s linear;
+  cursor: pointer;
+}
+#solution .swiper-solution .swiper-btn .swiper-prev {
+  transform: rotateY(180deg);
+}
+#solution .swiper-solution .swiper-btn .swiper-prev:hover::before,
+#solution .swiper-solution .swiper-btn .swiper-next:hover::before {
+  width: 40px;
+  background-color: #2d5891;
+}
+#solution .swiper-solution .swiper-btn .swiper-prev:hover::after,
+#solution .swiper-solution .swiper-btn .swiper-next:hover::after {
+  right: 5px;
+  border-color: #2d5891;
+}
+#solution .swiper-solution .swiper-btn .swiper-prev::before,
+#solution .swiper-solution .swiper-btn .swiper-next::before {
+  position: absolute;
+  display: block;
+  content: "";
+  top: 50%;
+  left: 50%;
+  margin-top: -2px;
+  width: 28px;
+  height: 2px;
+  background: #1a0b0b;
+  transition: all 0.3s;
+}
+#solution .swiper-solution .swiper-btn .swiper-prev::after,
+#solution .swiper-solution .swiper-btn .swiper-next::after {
+  position: absolute;
+  display: block;
+  content: "";
+  right: 16px;
+  top: 50%;
+  margin-top: -7px;
+  width: 10px;
+  height: 10px;
+  border-top: 2px solid #1a0b0b;
+  border-right: 2px solid #1a0b0b;
+  transform: rotate(45deg);
+  transition: all 0.3s;
+}
+
+
+/* topic  */
+.topic-box {
+  margin-top: 50px;
+}
+.topic-box .bg-line {
+  position: relative;
+  z-index: 1;
+  height: 100px;
+  background-color: #3a3a3a;
+}
+#topic {
+  z-index: 1000;
+  position: relative;
+  padding: 6% 0;
+  margin-bottom: -100px;
+  height: 200px;
+  background: no-repeat center center;
+  background-size: cover;
+  color: #fff;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#topic .line {
+  margin: 30px;
+  height: 20px;
+  width: 2px;
+  background-color: #fff;
+}
+#topic .addr {
+  font-size: 18px;
+  text-align: center;
+  line-height: 40px;
+}

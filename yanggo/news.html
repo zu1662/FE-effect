@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新闻中心</title>
+  <link rel="stylesheet" href="./css/base.css">
+  <link rel="stylesheet" href="./css/common.css">
+  <link rel="stylesheet" href="./css/news.css">
+  <link rel="stylesheet" href="./css/header.css">
+  <link rel="stylesheet" href="./css/footer.css">
+  <link rel="stylesheet" href="./lib/animate.min.css">
+  <script src="./lib/wow.min.js"></script>
+  <script src="./lib/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+  <header id="header">
+    <a class="logo" href="#"></a>
+    <div class="links">
+      <div class="link-item">
+        <a class="item-link" href="#">首页</a>
+      </div>
+      <div class="link-item">
+        <a class="item-link" href="#">关于我们</a>
+        <div class="dropnav">
+          <a class="drop-link" href="#"><span>关于我们</span></a>
+          <a class="drop-link" href="#"><span>关于我们</span></a>
+          <a class="drop-link" href="#"><span>关于我们</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="contact">联系我们</div>
+  </header>
+  <section id="detailBanner">
+    <div class="img-box" style="background-image: url(./img/commonBg.jpg);"></div>
+    <div class="title-box container">
+      <h1 class="wow bounceInRight">译联动态 NEWS</h1>
+    </div>
+  </section>
+  <section class="detail-info container" style=" padding-left: 80px; padding-right: 80px;">
+    <div class="tab-info">
+      <section id="news" style="justify-content: space-between;" class="container">
+        <div class="news-item set-shadow wow bounceInLeft">
+          <div class="pannel real">
+            <div class="img-box"><img src="./img/news.png"></div>
+            <div class="info-box">
+              <div class="info-time">2020.02.20</div>
+              <div class="info-text">宝信软件获得成都轨道交通“优秀设备供应商”称号</div>
+            </div>
+          </div>
+        </div>
+        <div class="news-item set-shadow wow bounceInLeft">
+          <div class="pannel real">
+            <div class="img-box"><img src="./img/news.png"></div>
+            <div class="info-box">
+              <div class="info-time">2020.02.20</div>
+              <div class="info-text">宝信软件获得成都轨道交通“优秀设备供应商”称号</div>
+            </div>
+          </div>
+        </div>
+        <div class="news-item set-shadow wow bounceInRight">
+          <div class="pannel real">
+            <div class="img-box"><img src="./img/news.png"></div>
+            <div class="info-box">
+              <div class="info-time">2020.02.20</div>
+              <div class="info-text">宝信软件获得成都轨道交通“优秀设备供应商”称号</div>
+            </div>
+          </div>
+        </div>
+        <div class="news-pagination">
+          <div class="nav-box">
+            <div class="nav-left disabled"><</div>
+            <div class="nav-item active">1</div>
+            <div class="nav-item">2</div>
+            <div class="nav-item">3</div>
+            <div class="nav-item">4</div>
+            <div class="nav-item">5</div>
+            <div class="nav-item">6</div>
+            <!-- <div class="nav-ellipsis-left"></div> -->
+            <div class="nav-ellipsis-right"></div>
+            <div class="nav-item">32</div>
+            <div class="nav-right">></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+  <footer id="footer">
+    <div class="footer-box container">
+      <div class="infos wow fadeInUp" >
+        <div class="copyright">
+          <a href="#">京ICP备17062012号-5</a>
+          <span>COPYRIGHT © 2018 hauzite ALL RIGHT RESERVED DESIGN BY: huazite</span>
+        </div>
+        <div class="links">
+          <a href="#">首页</a>
+          <a href="#">关于我们</a>
+          <a href="#">新闻中心</a>
+        </div>
+      </div>
+      <div class="backtop">
+        <div class="arch"><i></i></div>
+        <p>返回顶部</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
+<script>
+  $(document).ready(function(){
+    // initial wow
+    new WOW().init();
+    // header变换
+    $(window).scroll(function(){
+      if($(window).scrollTop()>=$("#detailBanner").height()-$("#header").outerHeight()){
+        $("#header").addClass("header-shadow")
+      }else{
+        $("#header").removeClass("header-shadow")
+      }		
+    })
+    // back top
+    $(".backtop").on("click", function(){
+      $('body,html').animate({
+          scrollTop: 0
+        },
+        500);
+    })       
+  })
+</script>

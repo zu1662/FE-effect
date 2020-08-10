@@ -1,0 +1,78 @@
+.container {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.icon {
+  display: inline-block;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  transition: all .3s;
+}
+
+.set-shadow {
+  box-shadow: 0 5px 10px rgba(0,0,0,.1);
+}
+
+/* 详情的banner */
+#detailBanner {
+  position: relative;
+  height: 400px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: rgba(0,0,0,.2);
+  display: flex;
+  align-items: center;
+}
+#detailBanner .img-box {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+#detailBanner .title-box {
+  position: relative;
+  z-index: 1000;
+  color: #fff;
+}
+#detailBanner .title-box h1 {
+  font-size: 30px;
+  margin: 10px 0;
+}
+
+.detail-info {
+  position: relative;
+  background-color: #fff;
+  padding: 20px 30px;
+  padding-bottom: 50px;
+}
+.detail-info .tab-box {
+  margin: 0 auto;
+  margin-top: -70px;
+  width: fit-content;
+  height: 80px;
+  line-height: 80px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.detail-info .tab-box .tab-item {
+  width: 200px;
+  height: 100%;
+  text-align: center;
+  background-color: #e5e5e5;
+  margin: 0 10px;
+  cursor: pointer;
+  transition: all ease-in .3s;
+}
+.detail-info .tab-box .tab-item.active,
+.detail-info .tab-box .tab-item:hover {
+  background-color: #fff;
+  color: #2d5891;
+}
+.detail-info .tab-info {
+  margin-top: 50px;
+}

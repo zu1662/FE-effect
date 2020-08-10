@@ -1,0 +1,126 @@
+#header {
+  z-index: 10000;
+  position: fixed;
+  top: 0;
+  padding: 10px;
+  width: calc(100% - 20px);
+  height: 60px;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all ease-in .3s;
+}
+
+#header .logo {
+  display: block;
+  width: 180px;
+  height: 32px;
+  background-image: url("../img/logo.png");
+  background-size: 100%;
+}
+
+#header .links {
+  padding: 0 20px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+#header .links .link-item {
+  width: 100px;
+  margin: 0 20px;
+  text-align: center;
+  position: relative;
+}
+#header .links .link-item .item-link {
+  display: inline-block;
+  width: 100%;
+  color: #fff;
+  font-size: 16px;
+}
+#header .links .link-item:hover .item-link {
+  color: #2d5891;
+}
+#header .links .link-item .dropnav {
+  display: flex;
+  flex-direction: column;
+  padding-top: 35px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  transition: all linear .3s;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.1);
+}
+#header .links .link-item .dropnav::before {
+  content: "";
+  position: absolute;
+  left: 45%;
+  top: 28px;
+  display: block;
+  width:0;
+  height:0;
+  border-left:5px solid transparent;
+  border-right:5px solid transparent;
+  border-bottom:8px solid #fff;
+}
+#header .links .link-item:hover .dropnav {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+}
+#header .links .link-item .dropnav .drop-link {
+  display: block;
+  width: 100%;
+  padding: 10px 0;
+  text-align: center;
+  background-color: #fff;
+}
+#header .links .link-item .dropnav .drop-link:hover {
+  background-color: #f5f5f5;
+}
+#header .links .link-item .dropnav .drop-link span{
+  color: #666;
+  font-size: 14px;
+}
+
+
+#header .contact{
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  border: 1px solid #fff;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all ease-in .3s;
+}
+#header .contact:hover {
+  color: #2d5891;
+  border-color: #2d5891;
+}
+
+
+/* header white */
+#header.header-shadow {
+  background-color: #fff;
+  box-shadow: 0 5px 10px rgba(0,0,0,.1);
+}
+
+#header.header-shadow  .logo {
+  background-image: url("../img/logo1.png");
+}
+#header.header-shadow .links .link-item .item-link {
+  color: #666;
+}
+#header.header-shadow .links .link-item .dropnav {
+  top: -15px;
+  padding-top: 40px;
+  box-shadow: 0 5px 10px rgba(0,0,0,.1);
+}
+#header.header-shadow .contact {
+  color: #2d5891;
+  border-color: #2d5891;
+}
