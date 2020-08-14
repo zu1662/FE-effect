@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>复制时自动加版权信息</title>
+</head>
+<body>
+  <div>Test Data String</div>
+</body>
+</html>
+<script>
+  function addCopyright(){
+    let bodyDOM = document.getElementsByTagName('body')[0]
+    let selection = window.getSelection()
+
+    // 设置copyright信息
+    let pageInfo = `
+
+      <br>---------------------</br>
+      <br>著作权归作者所有。</br>
+      <br>商业转载请联系作者获得授权，非商业转载请注明出处。</br>
+      <br>作者：huazite</br>
+      <br>© 版权声明：本文为博主原创文章，转载请附上博文链接！</br>
+    `
+    let copyText = selection.toString().replace(/\n/g, '<br>') + pageInfo
+    var newDiv = document.createElement('div');
+    newDiv.style.position = 'absolute';
+    newDiv.style.left = '-99999px';
+    bodyDOM.appendChild(newDiv);
+    newDiv.innerHTML = copyText;
+    selection.selectAllChildren(newDiv);
+      window.setTimeout(function () {
+      bodyDOM.removeChild(newDiv);
+    }, 0);
+  }
+  document.oncopy = addCopyright
+</script>
