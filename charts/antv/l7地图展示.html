@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="text/javascript" src="https://unpkg.com/@antv/l7plot@latest/dist/umd/l7plot.min.js"></script>
+  <title>地图展示</title>
+  <style>
+    html,body,#container {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="container"></div>
+</body>
+</html>
+<script>
+  window.onload = function(){
+    fetch("https://gw.alipayobjects.com/os/basement_prod/337ddbb7-aa3f-4679-ab60-d64359241955.json")
+    .then(res => res.json()).then(datas => {
+      const capacityColors = ['#feddd2', '#fdb7a5', '#fb9078', '#fa664c', '#f93920']
+      new L7Plot.Dot('container', {
+        map: {
+          type: 'mapbox',
+          style: 'dark',
+          center: [120.19382669582967, 30.258134],
+          zoom: 5,
+          pitch: 0,
+          // token: 'e0082f9a757fe1ea648ff4e94b085686'
+        },
+        source: {
+          data: datas,
+          parser: { type: 'geojson' },
+        },
+        color: {
+          field: 'capacity',
+          value: ({ capacity }) => {
+            let index = Math.floor(capacity / 1000)
+            if(index > capacityColors.length) index = capacityColors.length - 1
+            return capacityColors[index];
+          },
+        },
+        size: {
+          field: 'capacity',
+          value: ({ capacity }) => {
+            return Math.floor(capacity / 400);
+          },
+        },
+        style: {
+          opacity: 0.8,
+          strokeWidth: 0,
+        },
+        tooltip: {
+          items: [
+            { field: 'plant', alias: '名称' },
+            { field: 'capacity', alias: '发电量' },
+            { field: 'depth', alias: 'depth' },
+          ],
+        },
+      })
+    })
+  }
+</script>

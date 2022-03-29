@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Document</title>
+  <style type="text/css">
+    body {
+      background-color: black;
+    }
+
+    canvas {
+      background-color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="mycanvas" width="800px" height="800px" style="border: 1px solid #000"></canvas>
+</body>
+
+</html>
+<script type="text/JavaScript">
+  // DrawFigure 函数封装
+  var DrawFigure = (function(){
+    function DrawFigure(canvas, options) {
+      var _this = this;
+      // canvas DOM 获取
+      this.canvas = canvas;
+      this._ctx = this.canvas.getContext('2d');
+      this.lastPt = null;
+      // 配置初始化
+      if(options === void 0) {
+        options = {};
+      }
+      this.options = options;
+      // 监听到鼠标按下的处理函数
+      this._handleMouseDown = function(event) {
+        // 当前初始坐标
+        _this.lastPt = {
+          x: event.pageX,
+          y: event.pageY
+        }
+        _this._mouseButtonDown = true;
+      }
+      // 监听到鼠标移动的处理函数
+      this._handleMouseMove = function(event) {
+        if(_this._mouseButtonDown) {
+          var event = window.event || event;
+          // 移动时，同步绘制线条
+          if(_this.lastPt !== null) {
+            _this._ctx.beginPath();
+            _this._ctx.moveTo(_this.lastPt.x,_this.lastPt.y);
+            _this._ctx.lineTo(event.pageX,event.pageY);
+            _this._ctx.strokeStyle = _this.options.strokeStyle || 'green';
+            _this._ctx.lineWidth = _this.options.lineWidth || 3;
+            _this._ctx.stroke();
+          }
+          _this.lastPt = {
+            x: event.pageX,
+            y: event.pageY
+          }
+        }
+      }
+      // 监听到鼠标抬起的处理函数
+      this._handleMouseUp = function(event) {
+        _this._mouseButtonDown = false;
+        _this.canvas.removeEventListener('pointermove',_this.__handleMouseMove,false);
+        _this.canvas.removeEventListener('mousemove',_this.__handleMouseMove,false);
+        _this.lastPt = null;
+        console.log('移除事件');
+      }
+      
+      // 初始化
+      DrawFigure.prototype.init = function(useMouse) {
+        this._mouseButtonDown = false;
+        if(!useMouse && window.PointerEvent) {
+          this.canvas.addEventListener('pointerdown',this._handleMouseDown,false);
+          this.canvas.addEventListener('pointermove',this._handleMouseMove,false);
+          this.canvas.addEventListener('pointerup',this._handleMouseUp,false);
+        } else {
+          this.canvas.addEventListener('mousedown',this._handleMouseDown,false);
+          this.canvas.addEventListener('mousemove',this._handleMouseMove,false);
+          this.canvas.addEventListener('mouseup',this._handleMouseUp,false);
+        }
+      }
+    }
+    return DrawFigure;
+  }());
+
+  // 使用 MouseEvent 进行路径绘制
+  function drawMoveWithMouseEvent(target, point, step){
+    return new Promise((resolve) => {
+      // 步长设置
+      step = step ? step : {x:10, y: 10}
+      let timerCount = 0
+      // 每次绘制前都要先触发 按下 
+      const event1 = new MouseEvent("mousedown", point);
+      target.dispatchEvent(event1);
+      // 使用 setInterval 自动进行鼠标的 移动事件触发
+      let timer = setInterval(() => {
+        if(timerCount > 50) {
+          // 当达到阈值后，清除定时器
+          clearInterval(timer)
+          // 并触发鼠标 抬起 的事件
+          const event3 = new MouseEvent("mouseup", point);
+          target.dispatchEvent(event3);
+          // 返回当前点位
+          resolve(point)
+          return
+        }
+        // 更新鼠标触发位置
+        point.clientX += step.x;
+        point.clientY += step.y;
+        // 触发 鼠标的 移动 事件
+        const event2 = new MouseEvent("mousemove", point);
+        target.dispatchEvent(event2);
+        timerCount++
+      }, 10);
+    })
+  }
+
+  async function drawTriangleWithMouseEvent(target) {
+    // 使用 MouseEvent 绘制三角形
+    // https://developer.mozilla.org/zh-CN/docs/Web/API/MouseEvent/MouseEvent
+    const pointerEventInitDict = {
+      view: window,
+      bubbles: true,
+      cancelable: true,
+      clientX: 50,
+      clientY: 50
+    }
+    let curPoint = await drawMoveWithMouseEvent(target, pointerEventInitDict, {x: 10, y: 10})
+    curPoint = await drawMoveWithMouseEvent(target, curPoint, {x: 0, y: -10})
+    curPoint = await drawMoveWithMouseEvent(target, curPoint, {x: -10, y: 0})
+  }
+  window.onload = function() {
+      var canvas = document.getElementById('mycanvas');
+      var drawFigure = new DrawFigure(canvas);
+      drawFigure.init(true);
+
+      drawTriangleWithMouseEvent(canvas)
+  }
+  </script>
