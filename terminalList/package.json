@@ -1,0 +1,17 @@
+{
+  "name": "terminallist",
+  "version": "1.0.0",
+  "description": "",
+  "main": "terminalList.js",
+  "scripts": {
+    "start": "node terminalList.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ansi-escapes": "^4.3.2",
+    "mute-stream": "^0.0.8",
+    "rxjs": "^7.5.5"
+  }
+}
