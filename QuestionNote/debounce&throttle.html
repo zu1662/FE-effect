@@ -31,13 +31,13 @@
     思路：
     每次触发事件时都取消之前的延时调用方法
   */
-  function debounce(fn) {
+  function debounce(fn, delay = 500) {
     let timeout = null; // 创建一个标记用来存放定时器的返回值
     return function () {
-      clearTimeout(timeout); // 每当用户输入的时候把前一个 setTimeout clear 掉
+      timeout && clearTimeout(timeout); // 每当用户输入的时候把前一个 setTimeout clear 掉
       timeout = setTimeout(() => { // 然后又创建一个新的 setTimeout, 这样就能保证输入字符后的 interval 间隔内如果还有字符输入的话，就不会执行 fn 函数
         fn.apply(this, arguments)
-      }, 500);
+      }, delay);
     };
   }
   function sayHi(e) {
@@ -55,9 +55,10 @@
     高频事件触发，但在n秒内只会执行一次，所以节流会稀释函数的执行频率
 
     思路：
-    每次触发事件时都判断当前是否有等待执行的延时函数
+    1. 方法一：每次触发事件时都判断当前是否有等待执行的延时函数
+    2. 方法二：记录每次触发的时间，如果当前时间超过了延时时间，才进行触发
   */
-  function throttle(fn) {
+  function throttle(fn, delay = 500) {
     let canRun = true; // 通过闭包保存一个标记
     return function () {
       if (!canRun) return; // 在函数开头判断标记是否为true，不为true则return
@@ -66,12 +67,24 @@
         fn.apply(this, arguments);
         // 最后在setTimeout执行完毕后再把标记设置为true(关键)表示可以执行下一次循环了。当定时器没有执行的时候标记永远是false，在开头被return掉
         canRun = true;
-      }, 500);
+      }, delay);
     };
   }
+
+  function throttle2(fn, delay = 500) {
+    let lastTime = 0
+    return function() {
+      const now = new Date().getTime()
+      if(now - lastTime > delay) {
+        lastTime = now
+        fn.apply(this, arguments)
+      }
+    }
+  }
+
   function getMouseXY(e) {
     console.log(e.screenX, e.screenY);
   }
   let bodyDOM = document.getElementById('body')
-  window.addEventListener('mousemove', throttle(getMouseXY))
+  window.addEventListener('mousemove', throttle2(getMouseXY, 1000))
 </script>

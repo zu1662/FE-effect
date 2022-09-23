@@ -89,6 +89,27 @@ let BFSdeepClone = (obj) => {
   return copyObj;
 };
 
+function deepClone(obj, cache = new WeakMap()) {
+  if (obj === null) return obj
+  if (typeof obj === 'function') return eval("(" + obj.toString() + ")");
+  if (typeof obj !== 'object') return obj
+  if (obj instanceof Date) return new Date(obj)
+  if (obj instanceof RegExp) return new RegExp(obj)
+  
+  
+  if (cache.has(obj)) return cache.get(obj) // 如果出现循环引用，则返回缓存的对象，防止递归进入死循环
+  let cloneObj = new obj.constructor() // 使用对象所属的构造函数创建一个新对象
+  cache.set(obj, cloneObj) // 缓存对象，用于循环引用的情况
+
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      cloneObj[key] = deepClone(obj[key], cache) // 递归拷贝
+    }
+  }
+  return cloneObj
+}
+
+
 
 /**测试数据 */
 // 输入 字符串String
@@ -134,7 +155,7 @@ let obj = {
   und: undefined,
   nul: null
 }
-var objCopy = DFSdeepClone(obj)
+var objCopy = deepClone(obj)
 var objCopy1 = BFSdeepClone(obj)
 console.log(objCopy === objCopy1) // 对象类型判断 false 测试通过
 console.log(obj.c === objCopy.c) // 对象类型判断 false 测试通过
@@ -144,6 +165,7 @@ console.log(obj.b === objCopy.b) // 函数类型判断 false 测试通过
 console.log(obj.f === objCopy.f) // 数组类型判断 false 测试通过
 console.log(obj.f === objCopy1.f) // 数组类型判断 false 测试通过
 console.log(obj.nul, obj.und) // 输出null，undefined 测试通过
+objCopy.b()
 
 // 输入环状数据
 // 预期不爆栈且深度复制
