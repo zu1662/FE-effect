@@ -1,0 +1,243 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #21222c;
+}
+
+/* 手机本体 */
+.iPhone-14-pro {
+  position: relative;
+  width: 291px;
+  height: 600px;
+  background-color: #998c9e;
+  border-radius: 48px;
+}
+
+/* 静音键 */
+.mute-btn {
+  position: absolute;
+  top: 100px;
+  left: -3px;
+  height: 20px;
+  width: 3px;
+  background: radial-gradient(#ccc, #666, #222);
+}
+
+/* 音量增大键 */
+.volume-up-btn {
+  position: absolute;
+  top: 145px;
+  left: -3px;
+  height: 40px;
+  width: 3px;
+  background: radial-gradient(#ccc, #666, #222);
+}
+
+/* 音量减小键 */
+.volume-down-btn {
+  position: absolute;
+  top: 205px;
+  left: -3px;
+  height: 40px;
+  width: 3px;
+  background: radial-gradient(#ccc, #666, #222);
+}
+
+/* 电源键 */
+.power-btn {
+  position: absolute;
+  top: 175px;
+  right: -3px;
+  height: 70px;
+  width: 3px;
+  background: radial-gradient(#ccc, #666, #222);
+}
+
+/* 手机屏幕 */
+.iPhone-14-pro .screen {
+  position: absolute;
+  inset: 2px;
+  background-color: black;
+  border-radius: 48px;
+  /* 边框 */
+  padding: 10px;
+}
+
+/* 屏幕内容 */
+.iPhone-14-pro .screen .wrapper {
+  width: 100%;
+  height: 100%;
+  border-radius: 40px;
+  background: url(./img/iPhone-14-Pro-Wallpaper-purple.webp);
+  background-size: cover;
+  opacity: 0;
+  transition: 0.5s;
+}
+.iPhone-14-pro .screen .wrapper:hover {
+  opacity: 1;
+}
+
+/* 灵动岛 */
+.dynamic-island {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  width: 85px;
+  height: 25px;
+  left: 50%;
+  top: 20px;
+  padding: 0 10px;
+  transform: translateX(-50%);
+  background: black;
+  border-radius: 20px;
+  transition: 0.5s ease-in-out;
+  cursor: default;
+  user-select: none;
+}
+
+/* 来电人信息 */
+.dynamic-island .caller {
+  display: flex;
+  align-items: center;
+  color: white;
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.dynamic-island .caller .avatar {
+  width: 0;
+  height: 0;
+  background: url(./img/50657-99800-Tim-Cook-xl.jpg);
+  background-size: cover;
+  background-position: -10px;
+  border-radius: 50%;
+  transition: 0.5s;
+}
+
+.dynamic-island .caller .info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.dynamic-island .caller .info span {
+  visibility: hidden;
+  opacity: 0;
+  line-height: 0;
+  color: #666;
+  font-size: 8px;
+  transition: 0.5s;
+}
+.dynamic-island .caller .info p {
+  font-size: 8px;
+  transition: 0.5s;
+}
+
+/* 接听和挂断电话按钮 */
+.dynamic-island .actions {
+  display: flex;
+  gap: 12px;
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.5s;
+  transition-delay: 0.25s;
+}
+
+.dynamic-island .actions .refuse {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  color: #ff4438;
+  transform: rotate(135deg);
+  transition: 0.5s;
+}
+.dynamic-island .actions .refuse  svg {
+  fill: #ff4438;
+  width: 18px;
+  height: 18px;
+}
+
+.dynamic-island .actions .answer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  color: #30d258;
+  transition: 0.5s;
+}
+
+.dynamic-island .actions .answer  svg {
+  fill: #30d258;
+  width: 18px;
+  height: 18px;
+}
+
+/* 鼠标悬浮时灵动岛的状态 */
+.dynamic-island:hover {
+  width: 200px;
+}
+
+.dynamic-island:hover .caller {
+  visibility: visible;
+  opacity: 1;
+}
+
+.dynamic-island:hover .actions {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* 灵动岛展开状态 */
+.dynamic-island.expanded {
+  width: 200px;
+  height: 50px;
+}
+.dynamic-island.expanded svg {
+  fill: #fff !important;
+}
+
+.dynamic-island.expanded .caller {
+  visibility: visible;
+  opacity: 1;
+}
+.dynamic-island.expanded .caller .avatar {
+  width: 30px;
+  height: 30px;
+  margin-right: 8px;
+}
+
+.dynamic-island.expanded .caller .info span {
+  visibility: visible;
+  line-height: 8px;
+  opacity: 1;
+}
+
+.dynamic-island.expanded .actions {
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0;
+}
+.dynamic-island.expanded .actions .refuse {
+  background-color: #ff4438;
+}
+.dynamic-island.expanded .actions .answer {
+  background-color: #30d258;
+}

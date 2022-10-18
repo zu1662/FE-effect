@@ -11,67 +11,81 @@
     margin: 0;
     height: 100%;
     width: 100%;
-    text-align: center;
   }
-  input {
-    display: block;
-    margin: 0 auto;
+  #inputText {
+    width: 40px;
+    height: 40px;
+    background-color: red;
   }
 </style>
 <body id="body">
-  <input id="inputDE" type="text" placeholder="debounce...">
-  <div>结果： <span id="inputText"></span></div>
+  <div id="inputText"></div>
 </body>
 </html>
-<script>
-  /**
-    防抖
-    触发高频事件后n秒内函数只会执行一次，如果n秒内高频事件再次被触发，则重新计算时间
 
-    思路：
-    每次触发事件时都取消之前的延时调用方法
-  */
-  function debounce(fn) {
-    let timeout = null; // 创建一个标记用来存放定时器的返回值
-    return function () {
-      clearTimeout(timeout); // 每当用户输入的时候把前一个 setTimeout clear 掉
-      timeout = setTimeout(() => { // 然后又创建一个新的 setTimeout, 这样就能保证输入字符后的 interval 间隔内如果还有字符输入的话，就不会执行 fn 函数
-        fn.apply(this, arguments)
-      }, 500);
-    };
-  }
-  function sayHi(e) {
-    console.log('防抖成功');
-    let inputText = document.getElementById('inputText')
-    inputText.innerText = inputDE.value
-  }
-  let inputDE = document.getElementById('inputDE')
-  inputDE.addEventListener('input', debounce(sayHi))
-  
+<script>
+//   const element = document.getElementById('inputText');
+// let start;
+// // callback接受一个由浏览器提供的，当函数开始执行的时间timestamp
+// function step(timestamp) {
+//   if (start === undefined) {
+//     start = timestamp;
+//   }
+//   // 计算每一帧刷新时的类增时间
+//   const elapsed = timestamp - start;
+//   console.log(elapsed);
+
+//   //这里使用`Math.min()`确保元素刚好停在 200px 的位置。
+//   element.style.transform = 'translateX(' + Math.min(0.1 * elapsed, 200) + 'px)';
+
+//   if (elapsed < 2000) { // 在两秒后停止动画
+//     window.requestAnimationFrame(step);
+//   }
+// }
+
+// window.requestAnimationFrame(step);
+
 </script>
-<script>
-  /**
-    节流
-    高频事件触发，但在n秒内只会执行一次，所以节流会稀释函数的执行频率
 
-    思路：
-    每次触发事件时都判断当前是否有等待执行的延时函数
-  */
-  function throttle(fn) {
-    let canRun = true; // 通过闭包保存一个标记
-    return function () {
-      if (!canRun) return; // 在函数开头判断标记是否为true，不为true则return
-      canRun = false; // 立即设置为false
-      setTimeout(() => { // 将外部传入的函数的执行放在setTimeout中
-        fn.apply(this, arguments);
-        // 最后在setTimeout执行完毕后再把标记设置为true(关键)表示可以执行下一次循环了。当定时器没有执行的时候标记永远是false，在开头被return掉
-        canRun = true;
-      }, 500);
-    };
+<script>
+  // 用于造成耗时情况的函数
+const delay = (time) => {
+  let now = Date.now();
+  // 这段逻辑会占用time时长，所以执行完它需要time时间
+  while (time + now > Date.now()) {};
+}
+
+// 待办事项
+let work = [
+  () => {
+    console.log('任务1')
+    // 故意占用1S时间
+    delay(1000);
+  },
+  () => {
+    console.log('任务2')
+    delay(1000);
+  },
+  () => {
+    console.log('任务3')
+  },
+  () => {
+    console.log('任务4')
+  },
+];
+
+const process = (deadline) => {
+  // 通过deadline.timeRemaining可获取剩余时间
+  console.log('deadline', deadline.timeRemaining());
+  // 还有剩余时间吗？还有剩余工作吗？如果都满足，那就再做一个任务吧
+  if (deadline.timeRemaining() > 0 && work.length > 0) {
+    work.shift()();
   }
-  function getMouseXY(e) {
-    console.log(e.screenX, e.screenY);
+  // 如果还有任务，继续调用requestIdleCallback
+  if (work.length) {
+    window.requestIdleCallback(process);
   }
-  let bodyDOM = document.getElementById('body')
-  window.addEventListener('mousemove', throttle(getMouseXY))
+}
+window.requestIdleCallback(process);
+
 </script>

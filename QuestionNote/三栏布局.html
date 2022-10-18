@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>三栏布局，左右各200px,中间自适应</title>
+  <style>
+    .container {
+      height: 100px;
+      width: 100%;
+      margin: 50px 0;
+    }
+    .container > div {
+      height: 100%;
+    }
+    .container .left {
+      width: 200px;
+      background-color: aquamarine;
+    }
+    .container .center {
+      background-color: brown;
+    }
+    .container .right {
+      width: 200px;
+      background-color: blanchedalmond;
+    }
+
+    /* 浮动实现 */
+    .float-container .left  {
+      float: left;
+      width: 200px;
+    }
+    .float-container .center  {
+      margin-left: 200px;
+      margin-right: 200px;
+    }
+    .float-container .right  {
+      float: right;
+      width: 200px;
+    }
+
+    /* 定位实现 */
+    .position-container {
+      position: relative;
+    }
+    .position-container .left  {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    .position-container .center  {
+      position: absolute;
+      left: 200px;
+      right: 200px;
+    }
+    .position-container .right  {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    /* flex实现 */
+    .flex-container {
+      display: flex;
+    }
+    .flex-container .center  {
+      flex: 1;
+    }
+
+    /* table 实现 */
+    .table-container {
+      display: table;
+    }
+    .table-container .left  {
+      display: table-cell;
+    }
+    .table-container .center  {
+      display: table-cell;
+    }
+    .table-container .right  {
+      display: table-cell;
+    }
+
+    /* grid 实现 */
+    .grid-container {
+      display: grid;
+      grid-template-columns: 200px auto 200px;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- 浮动 -->
+  <div class="float-container container">
+    <div class="left"></div>
+    <div class="right"></div>
+    <div class="center"></div>
+  </div>
+
+  <!-- 定位 -->
+  <div class="position-container container">
+    <div class="left"></div>
+    <div class="center"></div>
+    <div class="right"></div>
+  </div>
+
+  <!-- flex 布局 -->
+  <div class="flex-container container">
+    <div class="left"></div>
+    <div class="center"></div>
+    <div class="right"></div>
+  </div>
+
+  <!-- table 布局 -->
+  <div class="table-container container">
+    <div class="left"></div>
+    <div class="center"></div>
+    <div class="right"></div>
+  </div>
+
+  <!-- grid 布局 -->
+  <div class="grid-container container">
+    <div class="left"></div>
+    <div class="center"></div>
+    <div class="right"></div>
+  </div>
+
+  <div class="优缺点">
+    1. 以上布局的优缺点是什么
+    2. 如果去除高度，哪些布局还能使用
+  </div>
+</body>
+</html>

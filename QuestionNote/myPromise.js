@@ -1,7 +1,7 @@
 /*
  * @Date         : 2022-09-22 18:53:05
  * @LastEditors  : zu1662
- * @LastEditTime : 2022-09-23 10:34:00
+ * @LastEditTime : 2022-09-27 09:23:56
  * @Description  : 手写 Promise 实现
  * 
  * Copyright © 2022 by zu1662, All Rights Reserved. 
@@ -108,7 +108,7 @@ class MyPromise {
     return this.then(value => {
       return MyPromise.resolve(cb()).then(() => value)
     }, reason => {
-      return MyPromise.resolve(callback()).then(() => { throw reason })
+      return MyPromise.resolve(cb()).then(() => { throw reason })
     })
   }
 

@@ -38,8 +38,8 @@ class EventEmitter {
 
 const events = new EventEmitter()
 
-let cb = function(){
-  console.log('hello cb');
+let cb = function(obj){
+  console.log('hello cb', obj);
 }
 events.on("hello", cb)
 
@@ -51,7 +51,7 @@ events.once("hello", once)
 
 events.emit("hello")
 
-events.emit("hello")
+events.emit("hello", '-------------')
 
 setTimeout(() => {
   console.log('----- wait 2s -----');
