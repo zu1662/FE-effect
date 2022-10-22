@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>迷宫追踪</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    #game {
+      border: 2px solid #000;
+      width: fit-content;
+      height: fit-content;
+      position: relative;
+    }
+    #game .row-box {
+      display: flex;
+    }
+    #game .cat,
+    #game .effect {
+      transition: all ease-in .2s;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      line-height: 40px;
+      color: #fff;
+    }
+    #game .effect {
+      border-radius: 50%;
+    }
+    #game i {
+      border-right: 1px solid #000;
+      border-bottom: 1px solid #000;
+    }
+    #game i:last-child{
+      border-right: none;
+    }
+    #game i.block {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      background-color: #000;
+    }
+    #game i.road {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      background-color: #fff;
+    }
+
+    #game #gameMask {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(0, 0, 0, .5);
+      color: #fff;
+      z-index: 100;
+    }
+    #game #gameMask.show {
+      display: flex;
+    }
+  </style>
+</head>
+<body>
+  <article id="game">
+    <div id="gameMask">游戏结束</div>
+  </article>
+</body>
+</html>
+<script type="module">
+import Game from "./game.js";
+const game = new Game({
+  domId: 'game',
+  maskId: 'gameMask',
+  cat: [
+    {name: 'A', color: 'red'},
+    {name: 'B', color: 'green'},
+    {name: 'C', color: 'blue'},
+  ]
+});
+</script>

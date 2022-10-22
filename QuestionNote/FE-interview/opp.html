@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>面相对象</title>
+</head>
+<body>
+  <script>
+    // 类的声明, 函数方式
+    function Animal(){
+      this.name = name
+    }
+    // 类的声明, class
+    class Animal2 {
+      constructor(){
+        this.name = name
+      }
+    }
+
+    // 生成实例
+    var animal = new Animal()
+    var animal2 = new Animal2()
+    console.log(animal, animal2);
+  </script>
+
+  <script>
+    // 如何实现继承（继承实现的几种方式）
+
+    // 1. 借助构造函数实现继承: 创建Child对象时，把 Parent 的构造函数执行，并且重新定义this指向 child
+    // 缺点：Parent原型链上的属性并没有被 Child 所继承
+    function Parent1(){
+      this.name = 'parent1'
+    }
+    Parent1.prototype.say = function(){ 
+      console.log(this.name+ ' say hi'); 
+    }
+    function Child1(){
+      Parent1.call(this)
+      this.type = 'child1'
+    }
+    console.log(new Child1); // new Child1().say()  会报错
+    
+
+    // 2. 原型链实现继承: Child 的原型对象设置为 Parent 的实例，则 Parent 上所具有的方法，child 都会继承
+    // 缺点：Parent 的属性变化之后, Child2 创建的对象的对应的值，也跟着变化了。构造函数的实例对象是同一个
+    function Parent2(){
+      this.name = 'parent2'
+      this.arr = [1,2,3]
+    }
+    Parent2.prototype.say = function(){ 
+      console.log(this.name+ ' say hi'); 
+    }
+    function Child2(){
+      this.type = 'child2'
+    }
+    Child2.prototype = new Parent2()
+
+    var c1 = new Child2()
+    var c2 = new Child2()
+    c1.arr.push(4)
+    console.log(c1.arr, c2.arr);
+
+    // 组合方式： 把上述两种方式进行组合，是较通用的方式
+    // 缺点： 每次新建 child 对象， 父级的构造函数会执行 2 次
+    function Parent3(){
+      this.name = 'parent3'
+      this.arr = [1,2,3]
+    }
+    Parent3.prototype.say = function(){ 
+      console.log(this.name+ ' say hi'); 
+    }
+    function Child3(){
+      Parent3.call(this)
+      this.type = 'child3'
+    }
+    Child3.prototype = new Parent3()  // 这里的constructor 也进行了改变，参看 组合优化1
+
+    var c3 = new Child3()
+    var c4 = new Child3()
+    c3.arr.push(4)
+    console.log(c3.arr, c4.arr);
+
+    // 组合方式的优化1： Child 内部已经初始化 Parent 属性，然后只需把 Child的构造函数 设置为 Parent 的构造函数即可
+    // 缺点：无法判断对象继承于谁。因为直接把 Child 的构造函数设置为 Parent 的构造函数，导致寻找 constructor 时，找到的都是 Parent 的构造函数
+    function Parent4(){
+      this.name = 'parent4'
+      this.arr = [1,2,3]
+    }
+    Parent4.prototype.say = function(){ 
+      console.log(this.name+ ' say hi'); 
+    }
+    function Child4(){
+      Parent4.call(this)
+      this.type = 'child4'
+    }
+    Child4.prototype = Parent4.prototype
+
+    var c5 = new Child4()
+    console.log(c5 instanceof Child4, c5.__proto__.constructor === Child4); // true, false 这里 通过constructor 判断应该也是 true
+
+    // 组合方式的优化2：Object.create 根据 Parent 创建了一个空对象，但是空对象的构造函数又指向 Parent.prototype, 也可以找到父级属性。 同时还需要把 Child 的 constructor 设置为 自己
+    function Parent5(){
+      this.name = 'parent5'
+      this.arr = [1,2,3]
+    }
+    Parent5.prototype.say = function(){ 
+      console.log(this.name+ ' say hi'); 
+    }
+    function Child5(){
+      Parent5.call(this)
+      this.type = 'child5'
+    }
+    Child5.prototype = Object.create(Parent5.prototype)
+    Child5.prototype.constructor = Child5
+
+    var c6 = new Child5()
+    console.log(c6 instanceof Child5, c6.constructor === Child5); // true, true
+  </script>
+</body>
+</html>

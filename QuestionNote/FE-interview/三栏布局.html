@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>三栏布局，左右各200px,中间自适应</title>
+  <title>三栏布局，高度固定，左右各200px,中间自适应</title>
   <style>
     .container {
       height: 100px;
@@ -126,8 +126,18 @@
   </div>
 
   <div class="优缺点">
-    1. 以上布局的优缺点是什么
-    2. 如果去除高度，哪些布局还能使用
+    <p>1. 以上布局的优缺点是什么</p> 
+    <section>
+      浮动布局：兼容性较好，但是设置麻烦，需要关注清除浮动，多出一个div等情况
+      定位布局：兼容性较好，但是使用后，其他相应的div也需要配置定位处理，较麻烦
+      flex布局：是上述布局的增强，使用方便，兼容性相对没那么好
+      table布局：兼容性好，但是无法设置padding，margin等属性
+      grid布局：兼容性没flex好，知识点较多，深入使用较复杂
+    </section>
+    <p>2. 如果去除高度，哪些布局还能使用</p>
+    <section>
+      flex布局和table布局能用。
+    </section>
   </div>
 </body>
 </html>
